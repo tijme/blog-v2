@@ -1,0 +1,78 @@
+# Site
+site_title                          : Tijme Gommers
+site_description                    : A blog about cyber security and software engineering, mainly focussed on adversary tactics and red team operations.
+site_keywords                       : cybernetic, security, hacking, programming, software, development, engineering, blog, tijme, gommers, red, team, adversary, simulation, threat, oscp
+site_favicon                        : img/favicon.svg
+site_logo                           : img/logo.svg
+site_language_short                 : en
+site_language_full                  : english
+
+# Author
+author_fullname                     : Tijme Gommers
+author_github                       : tijme
+author_twitter                      : tijme
+author_linkedin                     : tijme
+author_paypal                       : https://www.paypal.com/paypalme/tijmegommers
+author_bunq                         : https://bunq.me/tijme
+
+author: 
+  name: Tijme Gommers
+  uri: "https://beta.tij.me"
+
+# Layout
+layout_content_width                : col-12 col-sm-12 col-md-12 col-lg-11 col-xl-8 col-xll-6
+
+# Exlude certain files from production builds
+exclude:
+  - CODE_OF_CONDUCT.md
+  - CONTRIBUTING.md
+  - LICENSE.md
+  - PRIVACY.md
+  - README.md
+  - SECURITY.md
+  - vendor
+  - Gemfile
+  - Gemfile.lock
+  - dotenv
+
+# Force include CNAME for gh-pages deployment
+include:
+  - CNAME
+
+# Collections
+collections:
+  pages:
+    output: true
+    permalink: /:path/
+  posts:
+    permalink: /blog/:slug/
+
+# Compress output HTML
+compress_html:
+  clippings: all
+  comments: all
+  blanklines: false
+
+# Compress output CSS
+sass:
+  style: compressed # You might prefer to minify using :compressed
+
+# RSS feed
+feed:
+  path: /feeds/atom.xml
+  posts_limit: 100
+
+# Markdown rendering
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# Include dependencies
+plugins:
+  - bootstrap
+  - jekyll-graphviz
+  - jekyll-feed
+  - jekyll-redirect-from
+  - jekyll-sitemap

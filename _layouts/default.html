@@ -1,0 +1,21 @@
+---
+layout: compress
+---
+
+<!DOCTYPE html>
+<html lang="{{ site.site_language_short }}">
+    <head>
+        {% include head.html %}
+    </head>
+    <body>
+        {% include navbar.html %}
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="{{ site.layout_content_width }}">
+                    {{ content }}
+                    {% include footer.html %}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

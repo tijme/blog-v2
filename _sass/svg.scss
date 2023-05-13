@@ -1,0 +1,32 @@
+.svg-wrapper {
+    width: 100%;
+    margin-bottom: 1rem;
+
+    padding: 1.0rem 1.0rem;
+    border-radius: 0.3rem;
+
+    background-color: $light;
+    color: $body-color;
+
+    text-align: center;
+
+    @media (prefers-color-scheme: dark) {
+        background-color: $dark;
+        color: $body-color-drkmde;
+    }
+
+    svg {
+        max-width: 100%;
+        margin: 0px 0px 0px 0px;
+
+	    @media (prefers-color-scheme: dark) {
+	        .background-dark-lighten { fill: lighten($body-bg-drkmde, 4%); }
+	        .background-dark { fill: $body-bg-drkmde; }
+	        .background-dark-darken { fill: darken($body-bg-drkmde, 4%); }
+
+	        .background-light-lighten { fill: $dark; }
+	        .background-light { fill: darken($dark, 2.5%); }
+	        .background-light-darken { fill: darken($dark, 5%); }
+	    }
+	}
+}

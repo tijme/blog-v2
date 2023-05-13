@@ -1,0 +1,22 @@
+---
+layout: home
+robots: index, follow
+---
+
+<div class="row row-cols-1 g-4">
+    {% for post in site.posts %}
+        {% if post.show_in_post_list %}
+            <article class="col">
+                <a href="{{ post.url }}" title="{{ post.title }}">
+                    <h2 class="mb-2">{{ post.title }}</h2>
+                </a>
+                <p class="mb-2 text-muted">Posted on <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%-d %B %Y' }}</time> by {{ post.author }}.</p>
+                <p class="mb-2">{{ post.description }}</p>
+                <a href="{{ post.url }}" title="{{ post.title }}">Read</a>
+                {% if forloop.last == false %}
+                    <hr class="mt-4 mb-0">
+                {% endif %}
+            </article>
+        {% endif %}
+    {% endfor %}
+</div>

@@ -1,0 +1,37 @@
+<footer class="text-center mt-5 mb-5">
+	<div class="footer-links">
+		<a href="/"><span>Posts</span></a>
+		{% assign sorted_pages = site.pages | sort:"order" %}
+		{% for page in sorted_pages %}
+			{% if page.include_in_footer == true %}
+				<a href="{{ page.url | absolute_url }}" target="_self"><span>{{ page.title }}</span></a>
+			{% endif %}
+		{% endfor %}
+	</div>
+	<p class="footer-copyright text-secondary">
+		Copyright &copy; {{ 'now' | date: '%Y' }} {{ site.author_fullname }}. All rights reserved.
+	</p>
+	<div class="footer-icons">
+		{% if site.author_twitter %}
+			<div class="padding">
+				<a href="https://twitter.com/{{ site.author_twitter }}" target="_blank" rel="noopener nofollow">
+					<span>{% include icon.html name='twitter' %}</span>
+				</a>
+			</div>
+		{% endif %}
+		{% if site.author_github %}
+			<div class="padding">
+				<a href="https://github.com/{{ site.author_github }}" target="_blank" rel="noopener nofollow">
+					<span>{% include icon.html name='github' %}</span>
+				</a>
+			</div>
+		{% endif %}
+		{% if site.author_linkedin %}
+			<div class="padding">
+				<a href="https://www.linkedin.com/in/{{ site.author_linkedin }}" target="_blank" rel="noopener nofollow">
+					<span>{% include icon.html name='linkedin' %}</span>
+				</a>
+			</div>
+		{% endif %}
+	</div>
+</footer>

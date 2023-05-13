@@ -1,0 +1,20 @@
+---
+---
+
+digraph GRAPH_0 {
+  edge [ ]
+  graph [ bgcolor="none" ]
+  node [ fontsize="10px", shape=box, style="filled", color="#E5E5E5", fillcolor="#E5E5E5", fontname="Menlo" ]
+  0 [ label="#1 Request\nhttp://example.tld" ]
+  1 [ label="#2 Spawn new requests\n<event loop>" ]
+  2 [ label="#2.1 Execute given request\n<event>" ]
+  3 [ label="#2.2 Scrape response\n<event>" ]
+  4 [ label="#3 Find new requests\n<event>" ]
+  5 [ label="#4 Queue\n<class>" ]
+  0 -> 5 [ color="#657b83" ]
+  5 -> 1 [ color="#657b83" ]
+  1 -> 2 [ color="#657b83" ]
+  2 -> 3 [ color="#657b83" ]
+  3 -> 4 [ color="#657b83" ]
+  4 -> 5 [ color="#657b83" ]
+}

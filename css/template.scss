@@ -1,0 +1,230 @@
+---
+# Front matter comment to ensure Jekyll properly reads file.
+---
+
+$white:    #FFFFFF;
+$gray-100: #E5E5E5;
+$gray-200: #CBCCCC;
+$gray-300: #B2B2B2;
+$gray-400: #989899;
+$gray-500: #828387; // Secondary
+$gray-600: #646566;
+$gray-700: #4B4B4C;
+$gray-800: #2c2c2e;
+$gray-900: #202020; // Dark
+$black:    #000000;
+
+$accent:   #ec1438; // Accent
+$blue:     #148cf5;
+$indigo:   #6610f2;
+$purple:   #6f42c1;
+$pink:     #d63384;
+$red:      #ec1438;
+$orange:   #fd7e14;
+$yellow:   #ffc107;
+$green:    #198754;
+$teal:     #20c997;
+$cyan:     #0dcaf0;
+
+$primary:       $accent;
+$secondary:     $gray-500;
+$success:       $green;
+$info:          $cyan;
+$warning:       $yellow;
+$danger:        $red;
+$light:         $gray-100;
+$dark:          $gray-900;
+
+$body-bg: $white;
+$body-bg-drkmde: $gray-900;
+
+$body-color: $gray-900;
+$body-color-drkmde: $gray-100;
+
+$font-family-monospace: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+@import 'bootstrap';
+@import 'icons';
+@import 'code';
+@import 'svg';
+@import 'lightbox';
+@import 'navbar';
+@import 'footer';
+
+html {
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+
+    width: 100%;
+    height: 100%;
+
+    background: $body-bg;
+    background: radial-gradient(circle, $body-bg 0%, darken($body-bg, 10%) 100%);
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    overscroll-behavior-y: none;
+    overflow-y: scroll;
+    
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    letter-spacing: 0.1px;
+    line-height: 1.6;
+    font-size: 0.95em;
+    
+    color: $body-color;
+
+    // @media (prefers-color-scheme: dark) {
+    //     background: $body-bg-drkmde;
+    //     background: radial-gradient(circle, lighten($body-bg-drkmde, 4%) 0%, $body-bg-drkmde 100%);
+    //     background-attachment: fixed;
+    //     background-position: center;
+    //     background-repeat: no-repeat;
+
+    //     color: $body-color-drkmde;
+    // }
+
+    // &::before { content: "Breakpoint: XS"; }
+    // @include media-breakpoint-up(sm) { &::before { content: "Breakpoint: SM"; } }
+    // @include media-breakpoint-up(md) { &::before { content: "Breakpoint: MD"; } }
+    // @include media-breakpoint-up(lg) { &::before { content: "Breakpoint: LG"; } }
+    // @include media-breakpoint-up(xl) { &::before { content: "Breakpoint: XL"; } }
+    // @include media-breakpoint-up(xxl) { &::before { content: "Breakpoint: XLL"; } }
+}
+
+hr {
+    opacity: 0.1;
+}
+
+.text-accent {
+    color: darken($accent, 5%) !important;
+
+    // @media (prefers-color-scheme: dark) {
+    //     color: lighten($accent, 5%) !important;
+    // }
+}
+
+.text-bright {
+    color: darken($body-color, 10%) !important;
+
+    // @media (prefers-color-scheme: dark) {
+    //     color: lighten($body-color-drkmde, 10%) !important;
+    // }
+}
+
+.text-dimmed {
+    color: lighten($body-color, 10%) !important;
+
+    // @media (prefers-color-scheme: dark) {
+    //     color: darken($body-color-drkmde, 10%) !important;
+    // }
+}
+
+.text-muted,
+.text-secondary {
+    color: $gray-500 !important;
+
+    // @media (prefers-color-scheme: dark) {
+    //     color: $gray-500 !important;
+    // }
+}
+
+.text-primary {
+    color: $body-color !important;
+
+    // @media (prefers-color-scheme: dark) {
+    //     color: $body-color-drkmde !important;
+    // }
+}
+
+h1, h2, h3, h4, h5, h6 {
+    // font-family: 'Open Sans', Verdana, sans-serif;
+    // font-weight: 600;
+
+    font-family: Georgia, serif;
+    font-weight: normal;
+
+    letter-spacing: 1px;
+    line-height: 1.25;
+    @extend .text-bright;
+
+    margin-bottom: 1rem;
+
+    &:not(:first-child) {
+        margin-top: 1rem;
+    }
+}
+
+main, article {
+
+    h1+h2, h2+h3, h3+h4, h4+h5, h5+h6 {
+        margin-top: -0.5em !important;
+    }
+
+    h1, h2, h3 {
+        opacity: 1.0;
+    }
+
+    h4 {
+        opacity: 0.80;
+    }
+
+    h5, h6 {
+        opacity: 0.70;
+    }
+
+    h5, h6 {
+        font-style: italic;
+    }
+
+    a {
+        @extend .text-accent;
+
+        text-decoration: none;
+        border-bottom: 1px dotted transparent;
+
+        &:hover {
+            @extend .text-accent;
+            border-bottom: 1px dotted $accent;
+        }
+
+        &[data-lightbox] {
+            display: block;
+            text-align: center;
+
+            &:hover {
+                border-bottom: 1px dotted transparent;
+            }
+        }
+    }
+
+    ul {
+        padding-left: 0.85rem;
+    }
+
+    ol {
+        counter-reset: item;
+        list-style: none;
+        padding-left: 25px;
+
+        li:before {
+            counter-increment: item;
+            content: "#" counter(item) " ";
+            font-weight: bold;
+        }
+
+        ol li:before {
+            content: counters(item,".") " ";
+            font-weight: bold;
+        }
+    }
+
+}

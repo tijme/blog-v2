@@ -1,0 +1,42 @@
+.navbar-wrapper {
+    background-color: transparent; // $body-bg;
+    border-bottom: 1px solid darken($body-bg, 10%);
+
+    // @media (prefers-color-scheme: dark) {
+    //     background-color: transparent; // $body-bg-drkmde;
+    //     border-bottom: 1px solid $body-bg-drkmde;
+    // }
+
+    nav {
+        
+        .navbar-collapse {
+
+            .navbar-nav {
+
+                .nav-item {
+
+                    .nav-link {
+                        padding-left: 12px;
+                        padding-right: 12px;
+
+                        text-decoration: none;
+
+                        span:not(.icon) {
+                            @extend .text-accent;
+                            padding-bottom: 0.25rem;
+                            border-bottom: 1px dotted transparent;
+                        }
+
+                        &:hover {
+
+                            span:not(.icon) {
+                                color: $accent;
+                                border-bottom: 1px dotted $accent;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

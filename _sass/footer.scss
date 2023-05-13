@@ -1,0 +1,45 @@
+footer {
+	font-size: .875em;
+
+	.footer-links {
+
+	    a {
+	    	display: inline-block;
+	        text-decoration: none;
+	        padding: 4px 6px 4px 6px;
+
+	        span:not(.icon) {
+	            @extend .text-accent;
+	            padding-bottom: 0.1rem;
+	            border-bottom: 1px dotted transparent;
+	        }
+
+	        &:hover {
+
+	            span:not(.icon) {
+	                color: $accent;
+	                border-bottom: 1px dotted $accent;
+	            }
+	        }
+	    }
+    }
+
+    .footer-copyright {
+    	margin: 0px 0px 0px 0px;
+        padding: 0px 0px 0px 0px;
+    }
+
+    .footer-icons {
+
+    	.padding {
+			display: inline-block;
+	        padding: 4px 6px 4px 6px;
+
+    		a {
+    			@extend .text-accent;
+    			font-size: 1.2em;
+    		}
+    	}
+    }
+
+}

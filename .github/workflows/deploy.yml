@@ -1,0 +1,36 @@
+# Deploy static website to `gh-pages` branch
+name: pages-build
+
+# Triggers for the workflow to run
+on:
+  # Triggers the workflow on push or pull request events but only for the "master" branch
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Jobs to run on trigger
+jobs:
+  github-pages:
+    runs-on: ubuntu-latest
+    steps:
+      
+      # Checkout the repository
+      - uses: actions/checkout@v2
+
+      # Cache dependencies and build outputs
+      - uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+
+      # Build static website
+      - uses:  helaili/jekyll-action@v2
+        with:
+          target_branch: 'gh-pages'
+          token: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,33 @@
+<!-- Functional -->
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<!-- Design -->
+<link rel="stylesheet" href="{{ '/css/template.css' | absolute_url }}?version={{ site.version }}" />
+<link rel="shortcut icon" href="{{ site.site_favicon | absolute_url }}?version={{ site.version }}" type="image/svg+xml" />
+<script src="{{ '/js/template.js' | absolute_url }}?version={{ site.version }}"></script>
+
+<!-- SEO -->
+{% if page.url == '/' %}
+	<title>{{ site.site_title }}</title>
+	<meta property="og:title" content="{{ site.site_title }}">
+	<meta name="description" itemprop="description" content="{{ site.site_description }}">
+	<meta property="og:description" content="{{ site.site_description }}">
+	<meta name="keywords" content="{{ site.site_keywords }}">
+{% else %}
+	<title>{{ page.title }}</title>
+	<meta property="og:title" content="{{ page.title }}">
+	<meta name="description" itemprop="description" content="{{ page.description }}">
+	<meta property="og:description" content="{{ page.description }}">
+	<meta name="keywords" content="{{ page.keywords }}">
+{% endif %}
+
+<meta name="language" content="{{ site.site_language_full }}">
+<meta name="author" itemprop="creator" content="{{ site.author_fullname }}">
+<meta name="robots" content="{{ page.robots }}">
+<meta name="distribution" content="global">
+<meta name="copyright" content="Copyright © {{ 'now' | date: '%Y' }} {{ site.author_fullname }}. All rights reserved.">
+
+<!-- Alternatives -->
+<link rel="alternate" type="application/rss+xml" title="Atom" href="{{ site.feed.path }}">
