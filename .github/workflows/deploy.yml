@@ -38,6 +38,3 @@ jobs:
         with:
           target_branch: 'gh-pages'
           token: ${{ secrets.GITHUB_TOKEN }}
-
-
-apt install graphviz
