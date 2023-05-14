@@ -34,7 +34,8 @@ jobs:
             ${{ runner.os }}-gems-
 
       # Build static website
-      - uses:  helaili/jekyll-action@v2
+      - uses: helaili/jekyll-action@v2
         with:
           target_branch: 'gh-pages'
           token: ${{ secrets.GITHUB_TOKEN }}
+          pre_build_commands: apk --update add graphviz
