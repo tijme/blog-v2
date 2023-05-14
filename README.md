@@ -2,8 +2,8 @@
     <img src="https://raw.githubusercontent.com/tijme/blog/master/img/logo.svg" width="100"/>
 </p>
 <p align="center">
-    <a href="https://github.com/tijme/blog/blob/master/LICENSE.md"><img src="https://raw.finnwea.com/shield/?firstText=Source&secondText=Licensed" /></a>
-    <a href="https://github.com/tijme/blog/releases"><img src="https://raw.finnwea.com/vector-shields-v1/?typeKey=SemverVersion&typeValue1=tijme&typeValue2=blog&typeValue4=Release&cache=4"></a>
+    <a href="https://github.com/tijme/blog-v2/blob/master/LICENSE.md"><img src="https://raw.finnwea.com/shield/?firstText=Source&secondText=Licensed" /></a>
+    <a href="https://github.com/tijme/blog-v2/releases"><img src="https://raw.finnwea.com/vector-shields-v1/?typeKey=SemverVersion&typeValue1=tijme&typeValue2=blog&typeValue4=Release&cache=4"></a>
     <br/>
     <b>A blog about cyber security and software engineering, mainly focussed on adversary tactics and red team operations.</b>
     <br/>
@@ -15,7 +15,7 @@
 
 * It's completely static (built with [Jekyll](https://jekyllrb.com/))
 * Builds are completely automated with [GitHub Pages](https://pages.github.com/).
-* It's open-source (check the [contribution policy](https://github.com/tijme/blog/blob/master/CONTRIBUTING.md))
+* It's open-source (check the [contribution policy](https://github.com/tijme/blog-v2/blob/master/CONTRIBUTING.md))
 
 ## Development
 
@@ -31,16 +31,16 @@ The commands below are prefixed with `./dotenv` to source the `.env` variables t
 
 ## Issues
 
-Issues or new features can be reported via the [issue tracker](https://github.com/tijme/blog/issues). Please make sure your issue or feature has not yet been reported by anyone else before submitting a new one.
+Issues or new features can be reported via the [issue tracker](https://github.com/tijme/blog-v2/issues). Please make sure your issue or feature has not yet been reported by anyone else before submitting a new one.
 
 ## Security
 
-If you discover a security vulnerability, we would like to know about it so we can take steps to address it as quickly as possible. Please report your security vulnerability to the lead maintainer via [GitHub security advisories](https://github.com/tijme/blog/security/advisories/new). We strive to resolve all problems as quickly as possible, and we would like to play an active role in the ultimate publication on the problem after it is resolved.
+If you discover a security vulnerability, we would like to know about it so we can take steps to address it as quickly as possible. Please report your security vulnerability to the lead maintainer via [GitHub security advisories](https://github.com/tijme/blog-v2/security/advisories/new). We strive to resolve all problems as quickly as possible, and we would like to play an active role in the ultimate publication on the problem after it is resolved.
 
 ## Privacy
 
-We do not collect personally identifiable information in any way. Please refer to the [privacy policy](https://github.com/tijme/blog/blob/master/PRIVACY.md) for information.
+We do not collect personally identifiable information in any way. Please refer to the [privacy policy](https://github.com/tijme/blog-v2/blob/master/PRIVACY.md) for information.
 
 ## License
 
-The source of this blog is copyrighted but available to anyone on the internet. You can use it in accordence of the license. View [LICENSE.md](https://github.com/tijme/blog/blob/master/LICENSE.md) for the full license.
+The source of this blog is copyrighted but available to anyone on the internet. You can use it in accordence of the license. View [LICENSE.md](https://github.com/tijme/blog-v2/blob/master/LICENSE.md) for the full license.
