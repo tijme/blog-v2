@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/tijme/blog/master/img/logo.svg" width="100"/>
+    <img src="https://raw.githubusercontent.com/tijme/blog-v2/master/img/logo.svg" width="100"/>
 </p>
 <p align="center">
     <a href="https://github.com/tijme/blog-v2/blob/master/LICENSE.md"><img src="https://raw.finnwea.com/shield/?firstText=Source&secondText=Licensed" /></a>
