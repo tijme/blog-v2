@@ -4,6 +4,7 @@ title: Scamming people via Ethereum smart contracts
 subtitle: Ever tried the game 'guess the word'? Well, the smart contract version isn't that fun to play.
 description: Strange features in the Solidity programming language allow scammers to create faulty smart contracts (honeypots) on the ethereum blockchain.
 keywords: ethereum, blockchain, smart, contract, faulty, scam, scamming, hack, steal, money, guess, the, word, game, honeypot
+author: Tijme Gommers
 include_in_header: false
 include_in_footer: false
 show_in_post_list: true

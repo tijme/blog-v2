@@ -4,6 +4,7 @@ title: Securing Amsterdam against a direct terrorist threat
 subtitle: A mathematical model of security for control zoning Amsterdam in case of a critical threat level.
 description: Using a mathematical model of security it is possible to calculate the position of roadblocks as (cost) efficiently as possible in case of a direct terrorist threat.
 keywords: securing, amsterdam, mathematical, security, roadblocks, efficient, terrorist, threat
+author: Tijme Gommers
 include_in_header: false
 include_in_footer: false
 show_in_post_list: true

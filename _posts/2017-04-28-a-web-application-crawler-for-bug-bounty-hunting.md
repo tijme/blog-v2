@@ -4,6 +4,7 @@ title: A web application crawler for bug bounty hunting
 subtitle: A Python-based web crawler that enables you to execute your payload against all requests in scope.
 description: Not Your Average Web Crawler (NYAWC) is a Python package that enables you to crawl web applications for requests instead of URL's. With NYAWC you can execute your malicious payload on all in-scope requests of a web application.
 keywords: nyawc, web, application, crawler, spider, crawling, bot, hacking, bug, bounty, open, source, python
+author: Tijme Gommers
 include_in_header: false
 include_in_footer: false
 show_in_post_list: true

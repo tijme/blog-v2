@@ -4,6 +4,7 @@ title: Migrating one-time passwords from Authy to Raivo OTP
 subtitle: Migrating all of your OTPs from Authy to Raivo OTP.
 description: Authy doesn't allow you to migrate your one-time passwords to other OTP apps. However, the Authy Chrome extension allows everyone to extract the tokens by using the Chrome developer console.
 keywords:  raivo, authy, migrating, otp, counter, one, time, password, client, native, app, swift, secure, fast, lightweight, token, two, second, factor
+author: Tijme Gommers
 include_in_header: false
 include_in_footer: false
 show_in_post_list: false

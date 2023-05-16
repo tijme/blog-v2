@@ -4,6 +4,7 @@ title: An efficiency improvement for Burp Suite
 subtitle: An extension that automatically marks similar requests as 'out-of-scope'.
 description: Similar Request Excluder is a Burp Suite extension that detects similar code flows (CFG-paths) in requests and automatically moves them 'out-of-scope' so they won't be processed by active scans.
 keywords: similar, request, excluder, burp, suite, portswigger, extension, efficiency, speed, fast, slow, remove, duplicate, urls
+author: Tijme Gommers
 include_in_header: false
 include_in_footer: false
 show_in_post_list: false

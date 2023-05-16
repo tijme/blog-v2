@@ -4,6 +4,7 @@ title: Migrating your one-time passwords to Raivo OTP
 subtitle: Migrating all of your one-time passwords to Raivo OTP in just a few minutes.
 description: Many one-time password (OTP) apps do not allow you to migrate your OTPs to other apps. This blog post contains fancy tricks that enable you to export these OTPs anyway.
 keywords: raivo, migrating, export, otp, counter, one, time, password, client, native, app, swift, secure, fast, lightweight, token, two, second, factor
+author: Tijme Gommers
 include_in_header: false
 include_in_footer: false
 show_in_post_list: false

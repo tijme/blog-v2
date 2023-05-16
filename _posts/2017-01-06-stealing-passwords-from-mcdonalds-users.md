@@ -4,6 +4,7 @@ title: Stealing passwords from McDonald's users
 subtitle: Reflected XSS through AngularJS sandbox bypass causes password exposure of McDonald users.
 description: By abusing an insecure cryptographic storage vulnerability and a reflected server cross-site-scripting vulnerability it is possible to steal and decrypt the password from a McDonald's user.
 keywords: xss, cross-site, scripting, mcdonalds, password, vulnerability, stealing, angularjs
+author: Tijme Gommers
 include_in_header: false
 include_in_footer: false
 show_in_post_list: true

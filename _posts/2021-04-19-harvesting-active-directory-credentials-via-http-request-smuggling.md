@@ -4,6 +4,7 @@ title: Harvesting credentials via HTTP Request Smuggling
 subtitle: A vulnerability that allows you to gain persistent access to credentials of Exchange clients.
 description: By abusing an HTTP Request Smuggling vulnerability on Outlook Web Access (OWA) for Exchange, it is possible to steal credentials of unsuspecting Active Directory users trying to authenticate to OWA.
 keywords: http, request, smuggling, desynchronization, hrs, red team, initial foothold, technical, vulnerability, exchange, outlook
+author: Tijme Gommers
 include_in_header: false
 include_in_footer: false
 show_in_post_list: true

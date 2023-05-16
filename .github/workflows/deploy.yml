@@ -17,10 +17,6 @@ jobs:
   github-pages:
     runs-on: ubuntu-latest
     steps:
-
-      #  Install Graphviz
-      - name: Install Graphviz
-        run: sudo apt install -y graphviz
       
       # Checkout the repository
       - uses: actions/checkout@v2
