@@ -3,7 +3,7 @@
 </p>
 <p align="center">
     <a href="https://github.com/tijme/blog-v2/blob/master/LICENSE.md"><img src="https://raw.finnwea.com/shield/?firstText=Source&secondText=Licensed" /></a>
-    <a href="https://github.com/tijme/blog-v2/releases"><img src="https://raw.finnwea.com/vector-shields-v1/?typeKey=SemverVersion&typeValue1=tijme&typeValue2=blog&typeValue4=Release&cache=4"></a>
+    <a href="https://github.com/tijme/blog-v2/releases"><img src="https://raw.finnwea.com/vector-shields-v1/?typeKey=SemverVersion&typeValue1=tijme&typeValue2=blog-v2&typeValue4=Release&cache=5"></a>
     <br/>
     <b>A blog about cyber security and software engineering, mainly focussed on adversary tactics and red team operations.</b>
     <br/>
