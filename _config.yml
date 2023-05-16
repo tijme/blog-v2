@@ -69,6 +69,10 @@ kramdown:
   input: GFM
   syntax_highlighter: rouge
 
+# Disable redirect.json creation
+redirect_from:
+  json: false
+
 # Include dependencies
 plugins:
   - bootstrap
