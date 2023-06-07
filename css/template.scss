@@ -227,4 +227,14 @@ main, article {
         }
     }
 
+    blockquote {
+        padding: 0.75rem 1.0rem;
+        background-color: $white;
+        border: 1px solid $light;
+
+        p {
+            margin-bottom: 0px;
+        }
+    }
+
 }

@@ -1,3 +1,6 @@
+# Version
+version                             : 2.0.1
+
 # Site
 site_title                          : Tijme Gommers
 site_description                    : A blog about cyber security and software engineering, mainly focussed on adversary tactics and red team operations.
@@ -47,6 +50,9 @@ collections:
   posts:
     permalink: /blog/:slug/
 
+# Show posts with a date in the future
+future: true
+
 # Compress output HTML
 compress_html:
   clippings: all
@@ -76,6 +82,7 @@ redirect_from:
 # Include dependencies
 plugins:
   - bootstrap
+  - jemoji
   - jekyll-graphviz
   - jekyll-feed
   - jekyll-redirect-from
