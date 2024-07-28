@@ -1,0 +1,97 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><meta http-equiv="X-UA-Compatible" content="IE=edge" /><meta name="viewport" content="width=device-width, initial-scale=1" /><link rel="stylesheet" href="/css/template.css?version=2.0.1" /><link rel="shortcut icon" href="/img/favicon.svg?version=2.0.1" type="image/svg+xml" /> <script src="/js/template.js?version=2.0.1"></script><meta name="theme-color" content="#e6e6e6" media="(prefers-color-scheme: light)" /><meta name="theme-color" content="#e6e6e6" media="(prefers-color-scheme: dark)" /><title>Adding a placeholder to a UITextView in Swift</title><meta property="og:title" content="Adding a placeholder to a UITextView in Swift"><meta name="description" itemprop="description" content="Swift doesn't support placeholders in UITextView's natively, so here is the proper way to implement a placeholder in a UITextView. You can do it yourself in under 1 minute."><meta property="og:description" content="Swift doesn't support placeholders in UITextView's natively, so here is the proper way to implement a placeholder in a UITextView. You can do it yourself in under 1 minute."><meta name="keywords" content="textview, uitextview, ui, text, view, placeholder, background, grey, help, swift, ios, osx, apple"><meta name="language" content="english"><meta name="author" itemprop="creator" content="Tijme Gommers"><meta name="robots" content="index, follow"><meta name="distribution" content="global"><meta name="copyright" content="Copyright © 2024 Tijme Gommers. All rights reserved."><link rel="alternate" type="application/rss+xml" title="Atom" href="/feeds/atom.xml"></head><body><div class="navbar-wrapper mb-4"><div class="container"><div class="row justify-content-center"><div class="col-12 col-sm-12 col-md-12 col-lg-11 col-xl-8 col-xll-6"><nav class="navbar navbar-expand"><div class="collapse navbar-collapse"><ul class="navbar-nav me-auto"><li class="nav-item"> <a href="/" target="_self" class="nav-link"> <span>Posts</span> </a></li><li class="nav-item"> <a href="/about/" target="_self" class="nav-link"> <span>About</span> </a></li><li class="nav-item"> <a href="/donate/" target="_self" class="nav-link"> <span>Donate</span> </a></li></ul><ul class="navbar-nav"><li class="nav-item"> <a href="https://twitter.com/tijme" target="_blank" rel="noopener noreferrer" class="nav-link"> <span><span class="icon"> <svg><use xlink:href="/img/icons.svg#twitter"/></svg> </span></span> </a></li><li class="nav-item d-none d-sm-block"> <a href="https://www.linkedin.com/in/tijme/" target="_blank" rel="noopener noreferrer" class="nav-link"> <span><span class="icon"> <svg><use xlink:href="/img/icons.svg#linkedin"/></svg> </span></span> </a></li><li class="nav-item d-none d-sm-block"> <a href="https://github.com/tijme/" target="_blank" rel="noopener noreferrer" class="nav-link"> <span><span class="icon"> <svg><use xlink:href="/img/icons.svg#github"/></svg> </span></span> </a></li><li class="nav-item d-none d-sm-block"> <a href="/feeds/atom.xml" target="_blank" class="nav-link"> <span><span class="icon"> <svg><use xlink:href="/img/icons.svg#rss"/></svg> </span></span> </a></li></ul></div></nav></div></div></div></div><div class="container"><div class="row justify-content-center"><div class="col-12 col-sm-12 col-md-12 col-lg-11 col-xl-8 col-xll-6"><article class="container-fluid"><h1 class="mb-2">Adding a placeholder to a UITextView in Swift</h1><p class="mb-2 text-muted">Posted on <time datetime="2016-12-05T00:00:00+00:00">5 December 2016</time> by Tijme Gommers.</p><p>Swift doesn’t support placeholders in UITextView’s natively, so here is the proper way to do it yourself in under 1 minute. You can checkout the preview GIF on <a href="https://twitter.com/tijme/status/805743064232902656" target="_blank" rel="noopener noreferrer">Twitter</a>!</p><ul><li>Add <code class="language-plaintext highlighter-rouge">UITextViewPlaceholder.swift</code> to your project</li><li>Set the placeholder attribute of your <code class="language-plaintext highlighter-rouge">UITextView</code> (e.g. <code class="language-plaintext highlighter-rouge">textView.placeholder = "Message..."</code>)</li></ul><p><strong>UITextViewPlaceholder.swift (<a href="https://gist.github.com/tijme/14ec04ef6a175a70dd5a759e7ff0b938" target="_blank" title="Tweet" rel="noopener">GitHub Gist - latest version</a>)</strong></p><figure class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="c1">//</span>
+<span class="c1">//  UITextViewPlaceholder.swift</span>
+<span class="c1">//  TextViewPlaceholder</span>
+<span class="c1">//</span>
+<span class="c1">//  Copyright (c) 2017 Tijme Gommers &lt;tijme@finnwea.com&gt;</span>
+<span class="c1">//</span>
+<span class="c1">//  Permission is hereby granted, free of charge, to any person obtaining a copy</span>
+<span class="c1">//  of this software and associated documentation files (the "Software"), to deal</span>
+<span class="c1">//  in the Software without restriction, including without limitation the rights</span>
+<span class="c1">//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</span>
+<span class="c1">//  copies of the Software, and to permit persons to whom the Software is</span>
+<span class="c1">//  furnished to do so, subject to the following conditions:</span>
+<span class="c1">//</span>
+<span class="c1">//  The above copyright notice and this permission notice shall be included in all</span>
+<span class="c1">//  copies or substantial portions of the Software.</span>
+<span class="c1">//</span>
+<span class="c1">//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span>
+<span class="c1">//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="c1">//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="c1">//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="c1">//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span>
+<span class="c1">//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</span>
+<span class="c1">//  SOFTWARE.</span>
+
+<span class="kd">import</span> <span class="kt">UIKit</span>
+
+<span class="c1">/// Extend UITextView and implemented UITextViewDelegate to listen for changes</span>
+<span class="kd">extension</span> <span class="kt">UITextView</span><span class="p">:</span> <span class="kt">UITextViewDelegate</span> <span class="p">{</span>
+    
+    <span class="c1">/// Resize the placeholder when the UITextView bounds change</span>
+    <span class="k">override</span> <span class="kd">open</span> <span class="k">var</span> <span class="nv">bounds</span><span class="p">:</span> <span class="kt">CGRect</span> <span class="p">{</span>
+        <span class="k">didSet</span> <span class="p">{</span>
+            <span class="k">self</span><span class="o">.</span><span class="nf">resizePlaceholder</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    
+    <span class="c1">/// The UITextView placeholder text</span>
+    <span class="kd">public</span> <span class="k">var</span> <span class="nv">placeholder</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span>
+        <span class="k">get</span> <span class="p">{</span>
+            <span class="k">var</span> <span class="nv">placeholderText</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+            
+            <span class="k">if</span> <span class="k">let</span> <span class="nv">placeholderLabel</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="nf">viewWithTag</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">as?</span> <span class="kt">UILabel</span> <span class="p">{</span>
+                <span class="n">placeholderText</span> <span class="o">=</span> <span class="n">placeholderLabel</span><span class="o">.</span><span class="n">text</span>
+            <span class="p">}</span>
+            
+            <span class="k">return</span> <span class="n">placeholderText</span>
+        <span class="p">}</span>
+        <span class="k">set</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="k">let</span> <span class="nv">placeholderLabel</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="nf">viewWithTag</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">as!</span> <span class="kt">UILabel</span><span class="p">?</span> <span class="p">{</span>
+                <span class="n">placeholderLabel</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">newValue</span>
+                <span class="n">placeholderLabel</span><span class="o">.</span><span class="nf">sizeToFit</span><span class="p">()</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="k">self</span><span class="o">.</span><span class="nf">addPlaceholder</span><span class="p">(</span><span class="n">newValue</span><span class="o">!</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    
+    <span class="c1">/// When the UITextView did change, show or hide the label based on if the UITextView is empty or not</span>
+    <span class="c1">///</span>
+    <span class="c1">/// - Parameter textView: The UITextView that got updated</span>
+    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">textViewDidChange</span><span class="p">(</span><span class="n">_</span> <span class="nv">textView</span><span class="p">:</span> <span class="kt">UITextView</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="k">let</span> <span class="nv">placeholderLabel</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="nf">viewWithTag</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">as?</span> <span class="kt">UILabel</span> <span class="p">{</span>
+            <span class="n">placeholderLabel</span><span class="o">.</span><span class="n">isHidden</span> <span class="o">=</span> <span class="o">!</span><span class="k">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">isEmpty</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    
+    <span class="c1">/// Resize the placeholder UILabel to make sure it's in the same position as the UITextView text</span>
+    <span class="kd">private</span> <span class="kd">func</span> <span class="nf">resizePlaceholder</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="k">let</span> <span class="nv">placeholderLabel</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="nf">viewWithTag</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">as!</span> <span class="kt">UILabel</span><span class="p">?</span> <span class="p">{</span>
+            <span class="k">let</span> <span class="nv">labelX</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">textContainer</span><span class="o">.</span><span class="n">lineFragmentPadding</span>
+            <span class="k">let</span> <span class="nv">labelY</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">textContainerInset</span><span class="o">.</span><span class="n">top</span> <span class="o">-</span> <span class="mi">2</span>
+            <span class="k">let</span> <span class="nv">labelWidth</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="p">(</span><span class="n">labelX</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">let</span> <span class="nv">labelHeight</span> <span class="o">=</span> <span class="n">placeholderLabel</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">height</span>
+
+            <span class="n">placeholderLabel</span><span class="o">.</span><span class="n">frame</span> <span class="o">=</span> <span class="kt">CGRect</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="n">labelX</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="n">labelY</span><span class="p">,</span> <span class="nv">width</span><span class="p">:</span> <span class="n">labelWidth</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="n">labelHeight</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    
+    <span class="c1">/// Adds a placeholder UILabel to this UITextView</span>
+    <span class="kd">private</span> <span class="kd">func</span> <span class="nf">addPlaceholder</span><span class="p">(</span><span class="n">_</span> <span class="nv">placeholderText</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">placeholderLabel</span> <span class="o">=</span> <span class="kt">UILabel</span><span class="p">()</span>
+        
+        <span class="n">placeholderLabel</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">placeholderText</span>
+        <span class="n">placeholderLabel</span><span class="o">.</span><span class="nf">sizeToFit</span><span class="p">()</span>
+        
+        <span class="n">placeholderLabel</span><span class="o">.</span><span class="n">font</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">font</span>
+        <span class="n">placeholderLabel</span><span class="o">.</span><span class="n">textColor</span> <span class="o">=</span> <span class="kt">UIColor</span><span class="o">.</span><span class="n">lightGray</span>
+        <span class="n">placeholderLabel</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="mi">100</span>
+        
+        <span class="n">placeholderLabel</span><span class="o">.</span><span class="n">isHidden</span> <span class="o">=</span> <span class="o">!</span><span class="k">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">isEmpty</span>
+        
+        <span class="k">self</span><span class="o">.</span><span class="nf">addSubview</span><span class="p">(</span><span class="n">placeholderLabel</span><span class="p">)</span>
+        <span class="k">self</span><span class="o">.</span><span class="nf">resizePlaceholder</span><span class="p">()</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="k">self</span>
+    <span class="p">}</span>
+    
+<span class="p">}</span></code></pre></figure></article><footer class="text-center mt-5 mb-5"><div class="footer-links"> <a href="/"><span>Posts</span></a> <a href="/about/" target="_self"><span>About</span></a> <a href="/donate/" target="_self"><span>Donate</span></a> <a href="/responsible-disclosure/" target="_self"><span>Responsible Disclosure</span></a></div><p class="footer-copyright text-secondary"> Copyright &copy; 2024 Tijme Gommers. All rights reserved.</p><div class="footer-icons"><div class="padding"> <a href="https://twitter.com/tijme" target="_blank" rel="noopener nofollow"> <span><span class="icon"> <svg><use xlink:href="/img/icons.svg#twitter"/></svg> </span></span> </a></div><div class="padding"> <a href="https://github.com/tijme" target="_blank" rel="noopener nofollow"> <span><span class="icon"> <svg><use xlink:href="/img/icons.svg#github"/></svg> </span></span> </a></div><div class="padding"> <a href="https://www.linkedin.com/in/tijme" target="_blank" rel="noopener nofollow"> <span><span class="icon"> <svg><use xlink:href="/img/icons.svg#linkedin"/></svg> </span></span> </a></div></div></footer></div></div></div></body></html>
