@@ -29,6 +29,16 @@ The commands below are prefixed with `./dotenv` to source the `.env` variables t
 
     ./dotenv bundle exec jekyll serve
 
+## Docker
+
+**Build container:**
+
+    docker build -t blog-v2 .
+
+**Run container:**
+
+    docker run --rm -p 4000:4000 -e "JEKYLL_ENV=docker" -v "$PWD":/usr/src/app blog-v2
+
 ## Issues
 
 Issues or new features can be reported via the [issue tracker](https://github.com/tijme/blog-v2/issues). Please make sure your issue or feature has not yet been reported by anyone else before submitting a new one.
