@@ -34,10 +34,12 @@ The commands below are prefixed with `./dotenv` to source the `.env` variables t
 **Build container:**
 
     docker build -t blog-v2 .
+    container build --dns 1.1.1.1 -t blog-v2 .
 
 **Run container:**
 
     docker run --rm -p 4000:4000 -e "JEKYLL_ENV=docker" -v "$PWD":/usr/src/app blog-v2
+    container run --rm -p 4000:4000 -e JEKYLL_ENV=docker -v "$PWD":/usr/src/app blog-v2
 
 ## Issues
 
